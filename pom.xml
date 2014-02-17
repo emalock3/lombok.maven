@@ -8,7 +8,7 @@
   <groupId>org.projectlombok</groupId>
   <artifactId>lombok-maven</artifactId>
   <packaging>pom</packaging>
-  <version>1.12.4.1-SNAPSHOT</version>
+  <version>1.12.5-withoutunicodeescape</version>
   <name>Maven Plugin for Project Lombok</name>
   <url>http://awhitford.github.com/lombok.maven/</url>
   <inceptionYear>2010</inceptionYear>
@@ -28,7 +28,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <maven.api.version>3.0.4</maven.api.version>
-    <lombok.version>1.12.4</lombok.version>
+    <lombok.version>1.12.5-withoutunicodeescape</lombok.version>
   </properties>
   <modules>
     <module>lombok-maven-plugin</module>
@@ -156,6 +156,30 @@
           <target>1.6</target>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>com.github.github</groupId>
+        <artifactId>site-maven-plugin</artifactId>
+        <version>0.9</version>
+        <configuration>
+          <message>Maven artifacts for ${project.version}</message>
+          <noJekyll>true</noJekyll>
+          <outputDirectory>${project.build.directory}/mvn-repo</outputDirectory>
+          <branch>refs/heads/mvn-repo</branch>
+          <includes><include>**/*</include></includes>
+          <repositoryName>lombok.maven</repositoryName>
+          <repositoryOwner>emalock3</repositoryOwner>
+          <server>github</server>
+        </configuration>
+        <executions>
+          <!-- run site-maven-plugin's 'site' target as part of the build's normal 'deploy' phase -->
+          <execution>
+            <goals>
+              <goal>site</goal>
+            </goals>
+            <phase>deploy</phase>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
   <developers>
@@ -217,9 +241,20 @@
     <url>http://github.com/awhitford/lombok.maven/issues</url>
   </issueManagement>
   <distributionManagement>
-    <site>
-      <id>github.lombok.maven</id>
-      <url>scm:git:git@github.com:awhitford/lombok.maven.git</url>
-    </site>
+    <repository>
+      <id>internal.repo</id>
+      <name>Temporary Staging Repository</name>
+      <url>file://${project.build.directory}/mvn-repo</url>
+    </repository>
   </distributionManagement>
+  <repositories>
+    <repository>
+      <id>emalock3-lombok-github</id>
+      <url>https://github.com/emalock3/lombok/raw/mvn-repo/</url>
+      <snapshots>
+        <enabled>true</enabled>
+        <updatePolicy>always</updatePolicy>
+      </snapshots>
+    </repository>
+  </repositories>
 </project>

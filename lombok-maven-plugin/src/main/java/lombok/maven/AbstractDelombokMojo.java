@@ -52,6 +52,9 @@ public abstract class AbstractDelombokMojo extends AbstractMojo {
      */
     @Parameter(property="lombok.addOutputDirectory", defaultValue="true", required=true)
     protected boolean addOutputDirectory;
+    
+    @Parameter(property="lombok.withoutUnicodeEscape", defaultValue="false", required=true)
+    protected boolean withoutUnicodeEscape;
 
     /**
      * Formatting preferences.
@@ -123,20 +126,22 @@ public abstract class AbstractDelombokMojo extends AbstractMojo {
                 logger.warn("No encoding specified; using default: " + Charset.defaultCharset());
             }
 
-            if (null != formatPreferences && !formatPreferences.isEmpty()) {
-                try {
-                    // Construct a list array just like the command-line option...
-                    final List<String> formatOptions = new ArrayList(formatPreferences.size());
-                    for (final Map.Entry<String, String> entry : formatPreferences.entrySet()) {
-                        final String key = entry.getKey();
-                        // "pretty" is an exception -- it has no value...
-                        formatOptions.add( "pretty".equalsIgnoreCase(key) ? key : (key + ':' + entry.getValue()) );
-                    }
-                    delombok.setFormatPreferences(delombok.formatOptionsToMap(formatOptions));
-                } catch (final InvalidFormatOptionException e) {
-                    logger.error("The formatPreferences parameter is invalid; Please check!", e);
-                    throw new MojoExecutionException("Invalid formatPreferences: " + this.formatPreferences, e);
+            if (formatPreferences == null) {
+                formatPreferences = new java.util.HashMap<String, String>();
+            }
+            formatPreferences.put("withoutUnicodeEscape", Boolean.toString(withoutUnicodeEscape));
+            try {
+                // Construct a list array just like the command-line option...
+                final List<String> formatOptions = new ArrayList(formatPreferences.size());
+                for (final Map.Entry<String, String> entry : formatPreferences.entrySet()) {
+                    final String key = entry.getKey();
+                    // "pretty" is an exception -- it has no value...
+                    formatOptions.add( "pretty".equalsIgnoreCase(key) ? key : (key + ':' + entry.getValue()) );
                 }
+                delombok.setFormatPreferences(delombok.formatOptionsToMap(formatOptions));
+            } catch (final InvalidFormatOptionException e) {
+                logger.error("The formatPreferences parameter is invalid; Please check!", e);
+                throw new MojoExecutionException("Invalid formatPreferences: " + this.formatPreferences, e);
             }
 
             try {
