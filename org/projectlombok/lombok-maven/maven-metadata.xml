@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <metadata>
   <groupId>org.projectlombok</groupId>
-  <artifactId>lombok-maven-plugin</artifactId>
+  <artifactId>lombok-maven</artifactId>
   <versioning>
-    <latest>1.12.5-withoutunicodeescape</latest>
     <release>1.12.5-withoutunicodeescape</release>
     <versions>
       <version>1.12.5-withoutunicodeescape</version>
     </versions>
-    <lastUpdated>20140217153815</lastUpdated>
+    <lastUpdated>20140217155025</lastUpdated>
   </versioning>
 </metadata>
