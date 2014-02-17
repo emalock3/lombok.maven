@@ -256,5 +256,13 @@
         <updatePolicy>always</updatePolicy>
       </snapshots>
     </repository>
+    <repository>
+      <id>emalock3-lombok.maven-parent-github</id>
+      <url>https://github.com/emalock3/lombok.maven/raw/mvn-repo/</url>
+      <snapshots>
+        <enabled>true</enabled>
+        <updatePolicy>always</updatePolicy>
+      </snapshots>
+    </repository>
   </repositories>
 </project>
