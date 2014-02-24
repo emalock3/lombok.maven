@@ -156,30 +156,6 @@
           <target>1.6</target>
         </configuration>
       </plugin>
-      <plugin>
-        <groupId>com.github.github</groupId>
-        <artifactId>site-maven-plugin</artifactId>
-        <version>0.9</version>
-        <configuration>
-          <message>Maven artifacts for ${project.version}</message>
-          <noJekyll>true</noJekyll>
-          <outputDirectory>${project.build.directory}/mvn-repo</outputDirectory>
-          <branch>refs/heads/mvn-repo</branch>
-          <includes><include>**/*</include></includes>
-          <repositoryName>lombok.maven</repositoryName>
-          <repositoryOwner>emalock3</repositoryOwner>
-          <server>github</server>
-        </configuration>
-        <executions>
-          <!-- run site-maven-plugin's 'site' target as part of the build's normal 'deploy' phase -->
-          <execution>
-            <goals>
-              <goal>site</goal>
-            </goals>
-            <phase>deploy</phase>
-          </execution>
-        </executions>
-      </plugin>
     </plugins>
   </build>
   <developers>
@@ -249,16 +225,8 @@
   </distributionManagement>
   <repositories>
     <repository>
-      <id>emalock3-lombok-github</id>
-      <url>https://github.com/emalock3/lombok/raw/mvn-repo/</url>
-      <snapshots>
-        <enabled>true</enabled>
-        <updatePolicy>always</updatePolicy>
-      </snapshots>
-    </repository>
-    <repository>
-      <id>emalock3-lombok.maven-parent-github</id>
-      <url>https://github.com/emalock3/lombok.maven/raw/mvn-repo/</url>
+      <id>emalock3-github-repo</id>
+      <url>https://github.com/emalock3/mvn-repo/blob/master/</url>
       <snapshots>
         <enabled>true</enabled>
         <updatePolicy>always</updatePolicy>
